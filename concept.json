@@ -1,0 +1,15 @@
+{
+    "model": {
+        "model_name": "LSTM_NER"
+    },
+    "tokenizer": {
+        "tokenizer_name": "AlphaNumericTokenizer"
+    },
+    "key": {
+        "key_name": "class_name"
+    },
+    "other_params": {
+        "some_object": "sdfdsf"
+    },
+    "epochs": 10
+}
