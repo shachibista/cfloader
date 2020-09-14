@@ -1,7 +1,7 @@
 import json
 import pathlib
 from typing import Union
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 PathLike = Union[pathlib.Path, str]
 
@@ -11,10 +11,9 @@ def _get_path(_path: PathLike) -> pathlib.Path:
 
     return _path
 
-class Reader(ABC):
+class Reader(metaclass=ABCMeta):
     @abstractmethod
-    def read_config(self) -> dict:
-        pass
+    def read_config(self) -> dict: pass
 
 class Path(Reader):
     path: pathlib.Path
