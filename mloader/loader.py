@@ -1,4 +1,5 @@
 import importlib
+import inspect
 from typing import Optional, Any, List
 
 class Loader:
@@ -37,12 +38,16 @@ class Loader:
             class_parts = class_path.split(".")
             class_name = class_parts.pop()
             
-            module: Any = globals()
+            module: Any = None
             if len(class_parts) > 0:
                 module = importlib.import_module(".".join(class_parts))
             elif package is not None:
                 module = importlib.import_module(package)
             
+            if module is None:
+                caller = inspect.stack()[1]
+                module = inspect.getmodule(caller.frame)
+
             class_instantiator = getattr(module, class_name)
 
             return class_instantiator(**params)
