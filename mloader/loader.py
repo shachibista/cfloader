@@ -54,6 +54,10 @@ class Loader:
             if len(class_parts) > 0:
                 module = importlib.import_module(".".join(class_parts))
             elif package is not None:
+                if package.startswith("."):
+                    caller = inspect.stack()[1]
+                    module = inspect.getmodule(caller.frame)
+                    package = module.__package__ + package
                 module = importlib.import_module(package)
             
             if module is None:
