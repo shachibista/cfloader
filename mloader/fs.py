@@ -21,16 +21,3 @@ def open(path: Union[pathlib.Path, str, dict, readers.Reader]):
         reader = readers.Dict(path)
 
     return Loader(reader.read_config())
-
-
-def save(path: Union[pathlib.Path, str], artefacts: dict):
-    with zipfile.ZipFile(path, "w") as archive:
-        for filename, data in artefacts:
-            if isinstance(data, pathlib.Path):
-                archive.write(data, filename)
-            elif isinstance(data, Loader):
-                archive.writestr(filename, json.dumps(data.config))
-            elif isinstance(data, dict):
-                archive.writestr(filename, json.dumps(data))
-            else:
-                archive.writestr(filename, pickle.dumps(data))
