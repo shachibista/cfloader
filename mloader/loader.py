@@ -3,6 +3,7 @@ import inspect
 from copy import deepcopy
 from typing import Optional, Any, List
 
+
 class Loader:
     _config: Optional[dict] = None
     config: Optional[dict] = None
@@ -23,10 +24,12 @@ class Loader:
                 return None
 
             anchor = anchor[key]
-        
+
         return anchor
 
-    def load(self, key: str, as_class: bool = False, package: Optional[str] = None) -> Any:
+    def load(
+        self, key: str, as_class: bool = False, package: Optional[str] = None
+    ) -> Any:
         obj = self._get_value(key)
 
         if as_class:
@@ -46,10 +49,10 @@ class Loader:
                     if isinstance(param, dict) and "load" in param and param["load"]:
                         param.pop("load")
                         params[key] = self.load(**param)
-        
+
             class_parts = class_path.split(".")
             class_name = class_parts.pop()
-            
+
             module: Any = None
             if len(class_parts) > 0:
                 module = importlib.import_module(".".join(class_parts))
@@ -59,7 +62,7 @@ class Loader:
                     module = inspect.getmodule(caller.frame)
                     package = module.__package__ + package
                 module = importlib.import_module(package)
-            
+
             if module is None:
                 caller = inspect.stack()[1]
                 module = inspect.getmodule(caller.frame)

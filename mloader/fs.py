@@ -7,6 +7,7 @@ from typing import Union, List, Any
 from mloader.loader import Loader
 import mloader.readers as readers
 
+
 def open(path: Union[pathlib.Path, str, dict, readers.Reader]):
     if isinstance(path, readers.Reader):
         return Loader(path.read_config())
@@ -20,6 +21,7 @@ def open(path: Union[pathlib.Path, str, dict, readers.Reader]):
         reader = readers.Dict(path)
 
     return Loader(reader.read_config())
+
 
 def save(path: Union[pathlib.Path, str], artefacts: dict):
     with zipfile.ZipFile(path, "w") as archive:

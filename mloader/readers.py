@@ -5,15 +5,19 @@ from abc import ABCMeta, abstractmethod
 
 PathLike = Union[pathlib.Path, str]
 
+
 def _get_path(_path: PathLike) -> pathlib.Path:
     if isinstance(_path, str):
         return pathlib.Path(_path)
 
     return _path
 
+
 class Reader(metaclass=ABCMeta):
     @abstractmethod
-    def read_config(self) -> dict: pass
+    def read_config(self) -> dict:
+        pass
+
 
 class Path(Reader):
     path: pathlib.Path
@@ -24,12 +28,14 @@ class Path(Reader):
     def read_config(self):
         return json.loads(self.path.read_text())
 
+
 class Dict(Reader):
     def __init__(self, config: dict):
         self.config = config
 
     def read_config(self):
         return self.config
+
 
 class Archive(Reader):
     path: pathlib.Path
@@ -45,7 +51,7 @@ class Archive(Reader):
         with zipfile.ZipFile(self.path, "r") as archive:
             with archive.open(self.config_filepath) as config_file:
                 return json.load(config_file)
-    
+
     def _read_tar(self, compression: str = ""):
         import tarfile
 
@@ -54,7 +60,9 @@ class Archive(Reader):
             config_file = archive.extractfile(config_fileinfo)
 
             if config_file is None:
-                raise Exception(f"configuration file {self.config_filepath} not found in archive {self.path}")
+                raise Exception(
+                    f"configuration file {self.config_filepath} not found in archive {self.path}"
+                )
 
             return json.loads(config_file.read())
 
