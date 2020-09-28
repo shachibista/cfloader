@@ -1,20 +1,27 @@
 import importlib
 import inspect
+from copy import deepcopy
 from typing import Optional, Any, List
 
 class Loader:
+    _config: Optional[dict] = None
     config: Optional[dict] = None
 
     def __init__(self, _config: dict):
-        self.config = _config
+        self._config = _config
+        self.config = deepcopy(_config)
 
     def _get_value(self, compound_key: str) -> Any:
         keys = compound_key.split(".")
 
-        anchor: Any = self.config
+        anchor: Any = self._config
 
         while len(keys) > 0:
             key = keys.pop(0)
+
+            if not key in anchor:
+                return None
+
             anchor = anchor[key]
         
         return anchor
