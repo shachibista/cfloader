@@ -41,6 +41,11 @@ class Loader:
 
                 class_path = obj.pop(class_path_key)
                 params = obj
+
+                for key, param in params.items():
+                    if isinstance(param, dict) and "load" in param and param["load"]:
+                        param.pop("load")
+                        params[key] = self.load(**param)
         
             class_parts = class_path.split(".")
             class_name = class_parts.pop()
