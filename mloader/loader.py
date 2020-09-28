@@ -26,7 +26,7 @@ class Loader:
         
         return anchor
 
-    def load(self, key, as_class=False, package=None) -> Any:
+    def load(self, key: str, as_class: bool = False, package: Optional[str] = None) -> Any:
         obj = self._get_value(key)
 
         if as_class:

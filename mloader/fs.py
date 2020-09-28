@@ -11,6 +11,8 @@ def open(path: Union[pathlib.Path, str, dict, readers.Reader]):
     if isinstance(path, readers.Reader):
         return Loader(path.read_config())
 
+    reader: readers.Reader
+
     if isinstance(path, pathlib.Path) or isinstance(path, str):
         reader = readers.Path(path)
 
