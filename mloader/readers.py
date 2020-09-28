@@ -24,6 +24,13 @@ class Path(Reader):
     def read_config(self):
         return json.loads(self.path.read_text())
 
+class Dict(Reader):
+    def __init__(self, config: dict):
+        self.config = config
+
+    def read_config(self):
+        return self.config
+
 class Archive(Reader):
     path: pathlib.Path
     config_filepath: str
