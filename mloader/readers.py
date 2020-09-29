@@ -1,17 +1,17 @@
 import json
 import pathlib
-from typing import Union
 from abc import ABCMeta, abstractmethod
+from typing import Union
 
 PathLike = Union[pathlib.Path, str]
+
 
 class ConfigFileNotFoundError(FileNotFoundError):
     def __init__(self, filepath, path):
         self.filepath = filepath
 
-        super().__init__(
-            f"configuration file {filepath} not found in archive {path}"
-        )
+        super().__init__(f"configuration file {filepath} not found in archive {path}")
+
 
 def _get_path(_path: PathLike) -> pathlib.Path:
     if isinstance(_path, str):
@@ -61,7 +61,6 @@ class Archive(Reader):
                     return json.load(config_file)
         except KeyError:
             raise ConfigFileNotFoundError(self.config_filepath, self.path)
-
 
     def _read_tar(self, compression: str = ""):
         import tarfile

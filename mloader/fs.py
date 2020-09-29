@@ -1,18 +1,25 @@
-import json
-import pickle
 import pathlib
-import zipfile
-from typing import Union, List, Any
+from typing import Any, List, Union
 
-from mloader.loader import Loader
 import mloader.readers as readers
+from mloader.loader import Loader
 
 
-def open(path: Union[pathlib.Path, str, dict, readers.Reader]):
+def open(path: Union[pathlib.Path, str, dict, readers.Reader]) -> Loader:
+    """This methods reads configuration from a path to a file, a dict or a reader
+    object and returns a Loader object to read objects from the configuration.
+
+    Args:
+        path (Union[pathlib.Path, str, dict, readers.Reader]): A path-like string or Path, dict or a configuration reader object
+
+    Returns:
+        Loader: An object that can read objects from the configuration
+    """
+
     if isinstance(path, readers.Reader):
         return Loader(path.read_config())
 
-    reader: readers.Reader
+    reader: readers.Reader  # forward-declaration for types
 
     if isinstance(path, pathlib.Path) or isinstance(path, str):
         reader = readers.Path(path)
