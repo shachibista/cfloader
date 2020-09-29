@@ -3,8 +3,8 @@ import json
 import pytest
 
 from mloader.loader import Loader
-from tests.models import *
-
+import tests.models as models
+from tests.models import DummyModelWithParams
 
 @pytest.fixture
 def model_config():
@@ -35,7 +35,7 @@ def test_loader_can_instantiate_class_as_string():
 
     model = loader.load("model", as_class=True, package="tests.models")
 
-    assert isinstance(model, DummyModelWithoutParams)
+    assert isinstance(model, models.DummyModelWithoutParams)
 
 
 def test_loader_can_instantiate_class_as_dict():
@@ -43,7 +43,7 @@ def test_loader_can_instantiate_class_as_dict():
 
     model = loader.load("model", as_class=True, package="tests.models")
 
-    assert isinstance(model, DummyModelWithoutParams)
+    assert isinstance(model, models.DummyModelWithoutParams)
 
 
 def test_loader_can_instantiate_class_with_params():
@@ -192,13 +192,13 @@ def test_nested_classes_are_loaded():
     })
 
     model: DummyModelWithDependency = loader.load(
-        "model", as_class=True
+        "model", as_class=True, package=".models"
     )
     
-    assert isinstance(model, DummyModelWithDependency)
-    assert isinstance(model.embedding, DummyEmbedding)
-    assert isinstance(model.dependency, DummyDependency)
-    assert isinstance(model.dependency.dependency, DummyDependency)
+    assert isinstance(model, models.DummyModelWithDependency)
+    assert isinstance(model.embedding, models.DummyEmbedding)
+    assert isinstance(model.dependency, models.DummyDependency)
+    assert isinstance(model.dependency.dependency, models.DummyDependency)
 
     assert model.dependency.dependency.dependency == None
     
