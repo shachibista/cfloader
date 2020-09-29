@@ -1,0 +1,21 @@
+{
+    "embedding": {
+        "embedding_name": "torch.nn.Embedding",
+        "num_embeddings": 50000,
+        "embedding_dim": 50
+    },
+    "model": {
+        "model_name": "LSTMTagger",
+        "embedding": {
+            "load": true,
+            "key": "embedding",
+            "as_class": true
+        },
+        "hidden_dim": 100,
+        "target_size": 9
+    },
+    "optimizer": {
+        "lr": 0.1
+    },
+    "epochs": 1
+}
