@@ -5,6 +5,13 @@ from abc import ABCMeta, abstractmethod
 
 PathLike = Union[pathlib.Path, str]
 
+class ConfigFileNotFoundError(FileNotFoundError):
+    def __init__(self, filepath, path):
+        self.filepath = filepath
+
+        super().__init__(
+            f"configuration file {filepath} not found in archive {path}"
+        )
 
 def _get_path(_path: PathLike) -> pathlib.Path:
     if isinstance(_path, str):
@@ -16,7 +23,7 @@ def _get_path(_path: PathLike) -> pathlib.Path:
 class Reader(metaclass=ABCMeta):
     @abstractmethod
     def read_config(self) -> dict:
-        pass
+        raise NotImplementedError
 
 
 class Path(Reader):
@@ -48,21 +55,27 @@ class Archive(Reader):
     def _read_zip(self):
         import zipfile
 
-        with zipfile.ZipFile(self.path, "r") as archive:
-            with archive.open(self.config_filepath) as config_file:
-                return json.load(config_file)
+        try:
+            with zipfile.ZipFile(self.path, "r") as archive:
+                with archive.open(self.config_filepath) as config_file:
+                    return json.load(config_file)
+        except KeyError:
+            raise ConfigFileNotFoundError(self.config_filepath, self.path)
+
 
     def _read_tar(self, compression: str = ""):
         import tarfile
 
         with tarfile.open(self.path, ":".join(["r", compression])) as archive:
-            config_fileinfo = archive.getmember(self.config_filepath)
+            try:
+                config_fileinfo = archive.getmember(self.config_filepath)
+            except KeyError:
+                raise ConfigFileNotFoundError(self.config_filepath, self.path)
+
             config_file = archive.extractfile(config_fileinfo)
 
             if config_file is None:
-                raise Exception(
-                    f"configuration file {self.config_filepath} not found in archive {self.path}"
-                )
+                raise ConfigFileNotFoundError(self.config_filepath, self.path)
 
             return json.loads(config_file.read())
 

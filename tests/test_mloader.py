@@ -9,6 +9,7 @@ import pytest
 
 import mloader
 from mloader.loader import Loader
+from mloader.readers import ConfigFileNotFoundError
 
 def test_mloader_can_open_path_objects():
     config_filepath = Path("tests/examples/config.json")
@@ -17,6 +18,13 @@ def test_mloader_can_open_path_objects():
 def test_mloader_can_open_str_paths():
     config_filepath = "tests/examples/config.json"
     loader = mloader.open(config_filepath)
+
+def test_mloader_can_open_dicts():
+    config_dict = {}
+    loader = mloader.open(config_dict)
+
+    assert isinstance(loader, Loader)
+    assert loader.config == config_dict
 
 def test_mloader_open_returns_loader():
     config_filepath = Path("tests/examples/config.json")
@@ -89,3 +97,13 @@ def test_mloader_can_open_tar_xz_files():
         config_fileinfo = archive_fs.getmember("config.json")
         config_file = archive_fs.extractfile(config_fileinfo)
         assert loader.config == json.loads(config_file.read())
+
+def test_mloader_complains_if_config_not_found_in_zip_archive():
+    archive_path = "tests/examples/archive.zip"
+    with pytest.raises(ConfigFileNotFoundError):
+        loader = mloader.open(mloader.Archive(archive_path, "cfg.json"))
+
+def test_mloader_complains_if_config_not_found_in_tar_archive():
+    archive_path = "tests/examples/archive.tar.xz"
+    with pytest.raises(ConfigFileNotFoundError):
+        loader = mloader.open(mloader.Archive(archive_path, "cfg.json"))

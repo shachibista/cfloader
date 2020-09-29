@@ -3,6 +3,10 @@ import inspect
 from copy import deepcopy
 from typing import Optional, Any, List
 
+def _get_calling_module():
+    caller = inspect.stack()[2]
+    module = inspect.getmodule(caller.frame)
+    return module
 
 class Loader:
     _config: Optional[dict] = None
@@ -33,6 +37,7 @@ class Loader:
         obj = self._get_value(key)
 
         if as_class:
+            module: Any = None
             if isinstance(obj, str):
                 class_path = obj
                 params = {}
@@ -40,7 +45,7 @@ class Loader:
                 class_path_key = f"{key}_name"
 
                 if class_path_key not in obj:
-                    raise Exception(f"please specify {key}_name for instantiation")
+                    raise KeyError(f"please specify {key}_name for instantiation")
 
                 class_path = obj.pop(class_path_key)
                 params = obj
@@ -48,24 +53,25 @@ class Loader:
                 for key, param in params.items():
                     if isinstance(param, dict) and "load" in param and param["load"]:
                         param.pop("load")
-                        params[key] = self.load(**param)
+                        if package is None:
+                            module = _get_calling_module()
+                            package = module.__name__
+
+                        params[key] = self.load(key=param["key"], as_class=param.get("as_class", False), package=package)
 
             class_parts = class_path.split(".")
             class_name = class_parts.pop()
 
-            module: Any = None
             if len(class_parts) > 0:
                 module = importlib.import_module(".".join(class_parts))
             elif package is not None:
                 if package.startswith("."):
-                    caller = inspect.stack()[1]
-                    module = inspect.getmodule(caller.frame)
+                    module = _get_calling_module()
                     package = module.__package__ + package
-                module = importlib.import_module(package)
+                module = importlib.import_module(package) # type: ignore
 
             if module is None:
-                caller = inspect.stack()[1]
-                module = inspect.getmodule(caller.frame)
+                module = _get_calling_module()
 
             class_instantiator = getattr(module, class_name)
 
