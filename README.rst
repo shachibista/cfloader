@@ -30,7 +30,10 @@ Loads python modules from a configuration file.
 Features
 --------
 
-* TODO
+* Auto class instantiation from json configuration
+* Read configuration from archives
+* Load dependencies between classes
+* Load configuration parameter as class or as object
 
 Credits
 -------

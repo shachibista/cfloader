@@ -64,10 +64,10 @@ Ready to contribute? Here's how to set up `mloader` for local development.
 
     $ git clone git@github.com:your_name_here/mloader.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Initialize the conda environment::
 
-    $ mkvirtualenv mloader
     $ cd mloader/
+    $ conda env create -f environment.yml
     $ python setup.py develop
 
 4. Create a branch for local development::
