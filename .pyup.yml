@@ -38,3 +38,8 @@ pr_prefix: "Bug #12345"
 # allow to close stale PRs
 # default: True
 close_prs: True
+
+requirements:
+  - requirements.txt
+  - requirements_dev.txt:
+      pin: False
