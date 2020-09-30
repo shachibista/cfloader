@@ -14,12 +14,6 @@ Model Loader
         :alt: Documentation Status
 
 
-.. image:: https://pyup.io/repos/github/shachibista/mloader/shield.svg
-     :target: https://pyup.io/repos/github/shachibista/mloader/
-     :alt: Updates
-
-
-
 Loads python modules from a configuration file.
 
 
