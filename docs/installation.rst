@@ -12,7 +12,7 @@ To install Model Loader, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install mloader
+    $ pip install cfloader
 
 This is the preferred method to install Model Loader, as it will always install the most recent stable release.
 
@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/shachibista/mloader
+    $ git clone git://github.com/shachibista/cfloader
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/shachibista/mloader/tarball/master
+    $ curl -OJL https://github.com/shachibista/cfloader/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/shachibista/mloader
-.. _tarball: https://github.com/shachibista/mloader/tarball/master
+.. _Github repo: https://github.com/shachibista/cfloader
+.. _tarball: https://github.com/shachibista/cfloader/tarball/master

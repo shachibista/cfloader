@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=mloader
+set SPHINXPROJ=cfloader
 
 if "%1" == "" goto help
 

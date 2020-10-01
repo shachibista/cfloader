@@ -1,16 +1,16 @@
-============
-Model Loader
-============
+==========================
+Model Configuration Loader
+==========================
 
 
-.. image:: https://img.shields.io/pypi/v/mloader.svg
-        :target: https://pypi.python.org/pypi/mloader
+.. image:: https://img.shields.io/pypi/v/cfloader.svg
+        :target: https://pypi.python.org/pypi/cfloader
 
-.. image:: https://img.shields.io/travis/shachibista/mloader.svg
-        :target: https://travis-ci.com/shachibista/mloader
+.. image:: https://img.shields.io/travis/shachibista/cfloader.svg
+        :target: https://travis-ci.com/shachibista/cfloader
 
-.. image:: https://readthedocs.org/projects/mloader/badge/?version=latest
-        :target: https://mloader.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/cfloader/badge/?version=latest
+        :target: https://cfloader.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
@@ -18,7 +18,7 @@ Loads python modules from a configuration file.
 
 
 * Free software: MIT license
-* Documentation: https://mloader.readthedocs.io.
+* Documentation: https://cfloader.readthedocs.io.
 
 
 Features

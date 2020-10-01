@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mloader.loader import Loader
+from cfloader.loader import Loader
 import tests.models as models
 from tests.models import DummyModelWithParams
 

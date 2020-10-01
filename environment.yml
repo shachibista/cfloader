@@ -1,4 +1,4 @@
-name: mloader
+name: cfloader
 channels:
   - defaults
 dependencies:

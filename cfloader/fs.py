@@ -1,8 +1,8 @@
 import pathlib
 from typing import Any, List, Union
 
-import mloader.readers as readers
-from mloader.loader import Loader
+import cfloader.readers as readers
+from cfloader.loader import Loader
 
 
 def open(path: Union[pathlib.Path, str, dict, readers.Reader]) -> Loader:

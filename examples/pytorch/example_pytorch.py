@@ -1,6 +1,6 @@
 import os
 import sys
-import mloader
+import cfloader
 import pickle
 
 from pathlib import Path
@@ -29,7 +29,7 @@ def simple_collator(batch):
 
 def cmd_train(args):
     model_file = Path(args.model or f"{module_dir}/config.json")
-    loader = mloader.open(model_file)
+    loader = cfloader.open(model_file)
 
     training_vocabulary = Vocabulary(ignore_case=True)
     tag_vocabulary = Vocabulary(ignore_case=True, simple=True)
@@ -76,7 +76,7 @@ def cmd_test(args):
     token_vocabulary = Vocabulary.load(saved_model["token_vocabulary"])
     tag_vocabulary = Vocabulary.load(saved_model["tag_vocabulary"])
 
-    loader = mloader.open(saved_model["config"])
+    loader = cfloader.open(saved_model["config"])
     model = loader.load("model", as_class=True, package=".models")
     model.load_state_dict(saved_model["model"])
     model.eval()
