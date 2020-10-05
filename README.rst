@@ -3,7 +3,7 @@ Model Configuration Loader
 ==========================
 
 
-.. image:: https://img.shields.io/pypi/v/cfloader.svg
+.. image:: https://img.shields.io/pypi/v/cfloader
         :target: https://pypi.python.org/pypi/cfloader
 
 .. image:: https://img.shields.io/travis/shachibista/cfloader.svg
