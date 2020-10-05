@@ -14,7 +14,7 @@ Model Configuration Loader
         :alt: Documentation Status
 
 
-Loads python modules from a configuration file.
+Loads and instantiates python classes from a configuration file.
 
 
 * Free software: MIT license
@@ -28,6 +28,51 @@ Features
 * Read configuration from archives
 * Load dependencies between classes
 * Load configuration parameter as class or as object
+
+Installation
+------------
+
+::
+
+    pip install cfloader
+
+Usage
+-----
+
+Create a configuration file with parameters:
+
+.. code-block:: json
+
+    {
+        "model": {
+            "model_name": "SomeClass",
+            "param_1": 20
+        },
+        "epochs": 10
+    }
+
+Now you can load the configuration parameters, either as primitive dicts or as a class:
+
+.. code-block:: python
+
+    import cfloader
+
+    class SomeClass:
+        def __init__(self, param_1):
+            self.param_1 = param_1
+
+    loader = cfloader.open("config.json")
+    num_epochs = loader.load("epochs") # = int(10)
+    model_param_1 = loader.load("model.param_1") # = int(20)
+    model_configuration = loader.load("model") # = {"model_name": "SomeClass", "param_1": 20}
+    model_class = loader.load("model", as_class=True) # = <SomeClass object (param_1 = 20)>
+
+For a more extensive example, see ``examples/pytorch/example_pytorch.py``. 
+
+.. note::
+    If you want to run the example, run it as a python module: ``python -m examples.pytorch.example_pytorch --help``
+
+    You may need to install pytorch ``pip install torch torchvision tqdm``
 
 Credits
 -------
