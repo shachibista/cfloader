@@ -62,6 +62,7 @@ Now you can load the configuration parameters, either as primitive dicts or as a
             self.param_1 = param_1
 
     loader = cfloader.open("config.json")
+    # loader = cfloader.open(cfloader.Archive("saved_model.zip", "config.json")) # loads config.json from saved_model.zip
     num_epochs = loader.load("epochs") # = int(10)
     model_param_1 = loader.load("model.param_1") # = int(20)
     model_configuration = loader.load("model") # = {"model_name": "SomeClass", "param_1": 20}
